@@ -39,16 +39,18 @@ def index():
             "date_resolved": request.form.get("date_resolved"),
             "approved_by": request.form.get("approved_by")
         }
+        # Ensure that the incident date is provided
+        incident_date = request.form.get("date_of_incident")
+        if not incident_date:
+            flash("Date of Incident is required.", "error")
+            return redirect(url_for("index"))
+        dt = datetime.strptime(incident_date, "%Y-%m-%d")
+        mmddyyyy = dt.strftime("%m%d%Y")
         # Calculate new report number (sequential, zero-padded to 4 digits)
         count = RCAReport.query.count() + 1
         report_number = f"{count:04d}"
-        # Format the incident date in MMDDYYYY and MMDDYY formats
-        incident_date = request.form.get("date_of_incident")
-        dt = datetime.strptime(incident_date, "%Y-%m-%d")
-        mmddyyyy = dt.strftime("%m%d%Y")
-        # Get the user-provided report name
+        # Get the user-provided report name and build the full title in the format "####_<NAME>-MMDDYYYY"
         report_name_input = request.form.get("report_name").strip()
-        # Create the full title: ####_<NAME>-MMDDYYYY
         full_report_title = f"{report_number}_{report_name_input}-{mmddyyyy}"
         # Save the report
         report = RCAReport(title=full_report_title, report_data=json.dumps(report_data))
@@ -62,7 +64,6 @@ def index():
     if report_id:
         selected_report = RCAReport.query.get_or_404(report_id)
         selected_report.data = json.loads(selected_report.report_data)
-        # Pre-format the incident date as MMDDYY for the header
         incident_date = selected_report.data.get("date_of_incident")
         if incident_date:
             dt = datetime.strptime(incident_date, "%Y-%m-%d")

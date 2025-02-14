@@ -1,151 +1,150 @@
 {% extends "base.html" %}
 {% block content %}
-  <!-- Header Bar -->
-  <div style="background: #f7f7f7; padding: 10px; margin-bottom: 10px;">
-    <h1>RCA Compass</h1>
-  </div>
-
-  <div style="display: flex;">
-    <!-- Left Column: List of previous reports -->
-    <div style="width: 30%; padding: 10px; border-right: 1px solid #ccc;">
-      {% if selected_report %}
-        <a href="{{ url_for('index') }}" class="btn" style="display: inline-block; margin-top: 10px;">New Report</a>
-      {% endif %}
-      <h3>Previous Reports</h3>
-      <ul style="list-style: none; padding: 0;">
-        {% for report in reports %}
-          <li style="margin-bottom: 5px;">
-            <a href="{{ url_for('index', report_id=report.id) }}">{{ report.title }}</a>
-          </li>
-        {% else %}
-          <li>No reports found.</li>
-        {% endfor %}
-      </ul>
+  <div style="display: flex; gap: 20px;">
+    <!-- Left Column: List of previous reports inside a frosted glass panel -->
+    <div style="width: 30%;">
+      <div class="panel">
+        {% if selected_report %}
+          <a href="{{ url_for('index') }}" class="btn" style="display: inline-block; margin-top: 10px;">New Report</a>
+        {% endif %}
+        <h3>View Previous Reports</h3>
+        <ul style="list-style: none; padding: 0;">
+          {% for report in reports %}
+            <li style="margin-bottom: 5px;">
+              <a href="{{ url_for('index', report_id=report.id) }}">{{ report.title }}</a>
+            </li>
+          {% else %}
+            <li>No reports found.</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
 
-    <!-- Right Column: Either show the selected report or the create form -->
-    <div style="width: 70%; padding: 10px;">
-      {% if selected_report %}
-        {% set data = selected_report.data %}
-        <h2>Root Cause Analysis Report - {{ data.report_name }} on {{ data.header_date }}</h2>
-        <p><strong>Description:</strong> {{ data.description }}</p>
-        <p><strong>Date of Incident:</strong> {{ data.date_of_incident }}</p>
-        <p><strong>Incident Description:</strong> {{ data.incident_description }}</p>
-        <p><strong>Reported By:</strong> {{ data.reported_by }}</p>
-        <p><strong>Affected:</strong> {{ data.affected }}</p>
-        <p><strong>Impact:</strong> {{ data.impact }}</p>
-        <p><strong>Frequency:</strong> {{ data.frequency }}</p>
-        <p><strong>Timeline:</strong> {{ data.timeline }}</p>
-        <p><strong>Events Before:</strong> {{ data.events_before }}</p>
-        <p><strong>Events During:</strong> {{ data.events_during }}</p>
-        <p><strong>Events After:</strong> {{ data.events_after }}</p>
-        <p><strong>Personnel:</strong> {{ data.personnel }}</p>
-        <p><strong>Staff Investigating:</strong> {{ data.staff_investigating }}</p>
-        <p><strong>Job Titles:</strong> {{ data.job_titles }}</p>
-        <p><strong>Data Collection Methods:</strong> {{ data.data_collection_methods }}</p>
-        <p><strong>Communication Plan:</strong> {{ data.communication_plan }}</p>
-        <p><strong>Root Cause:</strong> {{ data.root_cause }}</p>
-        <p><strong>Supporting Data:</strong> {{ data.supporting_data }}</p>
-        <p><strong>Resolution Steps:</strong> {{ data.resolution_steps }}</p>
-        <p><strong>Date Resolved:</strong> {{ data.date_resolved }}</p>
-        <p><strong>Approved By:</strong> {{ data.approved_by }}</p>
-        <p>
-          <a href="{{ url_for('download_pdf', report_id=selected_report.id) }}" class="btn">Download PDF</a>
-        </p>
-      {% else %}
-        <h2>Create New Root Cause Analysis Report</h2>
-        <form method="POST">
-          <div class="form-group">
-            <label for="report_name">Report Name</label>
-            <input type="text" id="report_name" name="report_name" placeholder="Enter a short name for this report" required>
-          </div>
-          <div class="form-group">
-            <label for="description">Description of the Issue</label>
-            <textarea id="description" name="description" placeholder="e.g. Server outage affecting production systems" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="date_of_incident">Date of Incident</label>
-            <input type="date" id="date_of_incident" name="date_of_incident" required>
-          </div>
-          <div class="form-group">
-            <label for="incident_description">Description of the Incident</label>
-            <textarea id="incident_description" name="incident_description" placeholder="e.g. The production server went down at 2 AM" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="reported_by">Who Reported the Incident?</label>
-            <input type="text" id="reported_by" name="reported_by" placeholder="e.g. John Doe" required>
-          </div>
-          <div class="form-group">
-            <label for="affected">Who Did the Incident Affect?</label>
-            <input type="text" id="affected" name="affected" placeholder="e.g. Customers, internal teams" required>
-          </div>
-          <div class="form-group">
-            <label for="impact">How Did It Affect Them?</label>
-            <textarea id="impact" name="impact" placeholder="e.g. Service disruption leading to revenue loss" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="frequency">How Often Did the Incident Occur?</label>
-            <input type="text" id="frequency" name="frequency" placeholder="e.g. One-time, recurring" required>
-          </div>
-          <div class="form-group">
-            <label for="timeline">Timeline</label>
-            <textarea id="timeline" name="timeline" placeholder="e.g. 1:00 AM – Issue detected, 1:30 AM – Notification sent, 2:00 AM – Resolved" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="events_before">What Events Occurred Before the Incident?</label>
-            <textarea id="events_before" name="events_before" placeholder="e.g. Recent deployment" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="events_during">What Events Occurred During the Incident?</label>
-            <textarea id="events_during" name="events_during" placeholder="e.g. Service outage, error messages" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="events_after">What Events Occurred After the Incident?</label>
-            <textarea id="events_after" name="events_after" placeholder="e.g. System recovery, post-mortem analysis" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="personnel">Personnel Involved</label>
-            <input type="text" id="personnel" name="personnel" placeholder="e.g. Alice, Bob" required>
-          </div>
-          <div class="form-group">
-            <label for="staff_investigating">Staff Investigating</label>
-            <input type="text" id="staff_investigating" name="staff_investigating" placeholder="e.g. Alice" required>
-          </div>
-          <div class="form-group">
-            <label for="job_titles">Job Titles</label>
-            <input type="text" id="job_titles" name="job_titles" placeholder="e.g. System Engineer, Developer" required>
-          </div>
-          <div class="form-group">
-            <label for="data_collection_methods">Methods for Collecting Data</label>
-            <textarea id="data_collection_methods" name="data_collection_methods" placeholder="e.g. Logs, Interviews" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="communication_plan">How Will Findings Be Communicated?</label>
-            <textarea id="communication_plan" name="communication_plan" placeholder="e.g. Email, Meeting" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="root_cause">Root Cause</label>
-            <textarea id="root_cause" name="root_cause" placeholder="e.g. Hardware failure, Software bug" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="supporting_data">Data Supporting the Finding</label>
-            <textarea id="supporting_data" name="supporting_data" placeholder="e.g. Error logs, monitoring data" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="resolution_steps">Steps to Resolve and Prevent the Issue</label>
-            <textarea id="resolution_steps" name="resolution_steps" placeholder="e.g. Replaced faulty component, improved monitoring" required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="date_resolved">Date Resolved</label>
-            <input type="date" id="date_resolved" name="date_resolved" required>
-          </div>
-          <div class="form-group">
-            <label for="approved_by">Approved By</label>
-            <input type="text" id="approved_by" name="approved_by" placeholder="e.g. Manager Name" required>
-          </div>
-          <button type="submit" class="btn">Create Report</button>
-        </form>
-      {% endif %}
+    <!-- Right Column: Either show the selected report or the create form inside a frosted glass panel -->
+    <div style="width: 70%;">
+      <div class="panel">
+        {% if selected_report %}
+          {% set data = selected_report.data %}
+          <h2>Root Cause Analysis Report - {{ data.report_name }} on {{ data.header_date }}</h2>
+          <p><strong>Description:</strong> {{ data.description }}</p>
+          <p><strong>Date of Incident:</strong> {{ data.date_of_incident }}</p>
+          <p><strong>Incident Description:</strong> {{ data.incident_description }}</p>
+          <p><strong>Reported By:</strong> {{ data.reported_by }}</p>
+          <p><strong>Affected:</strong> {{ data.affected }}</p>
+          <p><strong>Impact:</strong> {{ data.impact }}</p>
+          <p><strong>Frequency:</strong> {{ data.frequency }}</p>
+          <p><strong>Timeline:</strong> {{ data.timeline }}</p>
+          <p><strong>Events Before:</strong> {{ data.events_before }}</p>
+          <p><strong>Events During:</strong> {{ data.events_during }}</p>
+          <p><strong>Events After:</strong> {{ data.events_after }}</p>
+          <p><strong>Personnel:</strong> {{ data.personnel }}</p>
+          <p><strong>Staff Investigating:</strong> {{ data.staff_investigating }}</p>
+          <p><strong>Job Titles:</strong> {{ data.job_titles }}</p>
+          <p><strong>Data Collection Methods:</strong> {{ data.data_collection_methods }}</p>
+          <p><strong>Communication Plan:</strong> {{ data.communication_plan }}</p>
+          <p><strong>Root Cause:</strong> {{ data.root_cause }}</p>
+          <p><strong>Supporting Data:</strong> {{ data.supporting_data }}</p>
+          <p><strong>Resolution Steps:</strong> {{ data.resolution_steps }}</p>
+          <p><strong>Date Resolved:</strong> {{ data.date_resolved }}</p>
+          <p><strong>Approved By:</strong> {{ data.approved_by }}</p>
+          <p>
+            <a href="{{ url_for('download_pdf', report_id=selected_report.id) }}" class="btn">Download Report</a>
+          </p>
+        {% else %}
+          <h2>New Root Cause Analysis Report</h2>
+          <form method="POST">
+            <div class="form-group">
+              <label for="report_name">Report Name</label>
+              <textarea id="report_name" name="report_name" placeholder="e.g. Production Web, Database" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="description">Description of the Issue</label>
+              <textarea id="description" name="description" placeholder="e.g. Server outage affecting production systems" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="date_of_incident">Date of Incident</label>
+              <input type="date" id="date_of_incident" name="date_of_incident" required>
+            </div>
+            <div class="form-group">
+              <label for="incident_description">Description of the Incident</label>
+              <textarea id="incident_description" name="incident_description" placeholder="e.g. The production server went down at 2 AM" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="reported_by">Who Reported the Incident?</label>
+              <input type="text" id="reported_by" name="reported_by" placeholder="e.g. John Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="affected">Who Did the Incident Affect?</label>
+              <input type="text" id="affected" name="affected" placeholder="e.g. Customers, internal teams" required>
+            </div>
+            <div class="form-group">
+              <label for="impact">How Did It Affect Them?</label>
+              <textarea id="impact" name="impact" placeholder="e.g. Service disruption leading to revenue loss" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="frequency">How Often Did the Incident Occur?</label>
+              <input type="text" id="frequency" name="frequency" placeholder="e.g. One-time, recurring" required>
+            </div>
+            <div class="form-group">
+              <label for="timeline">Timeline</label>
+              <textarea id="timeline" name="timeline" placeholder="e.g. 1:00 AM – Issue detected, 1:30 AM – Notification sent, 2:00 AM – Resolved" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="events_before">What Events Occurred Before the Incident?</label>
+              <textarea id="events_before" name="events_before" placeholder="e.g. Recent deployment" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="events_during">What Events Occurred During the Incident?</label>
+              <textarea id="events_during" name="events_during" placeholder="e.g. Service outage, error messages" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="events_after">What Events Occurred After the Incident?</label>
+              <textarea id="events_after" name="events_after" placeholder="e.g. System recovery, post-mortem analysis" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="personnel">Personnel Involved</label>
+              <input type="text" id="personnel" name="personnel" placeholder="e.g. Alice, Bob" required>
+            </div>
+            <div class="form-group">
+              <label for="staff_investigating">Staff Investigating</label>
+              <input type="text" id="staff_investigating" name="staff_investigating" placeholder="e.g. Alice" required>
+            </div>
+            <div class="form-group">
+              <label for="job_titles">Job Titles</label>
+              <input type="text" id="job_titles" name="job_titles" placeholder="e.g. System Engineer, Developer" required>
+            </div>
+            <div class="form-group">
+              <label for="data_collection_methods">Methods for Collecting Data</label>
+              <textarea id="data_collection_methods" name="data_collection_methods" placeholder="e.g. Logs, Interviews" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="communication_plan">How Will Findings Be Communicated?</label>
+              <textarea id="communication_plan" name="communication_plan" placeholder="e.g. Email, Meeting" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="root_cause">Root Cause</label>
+              <textarea id="root_cause" name="root_cause" placeholder="e.g. Hardware failure, Software bug" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="supporting_data">Data Supporting the Finding</label>
+              <textarea id="supporting_data" name="supporting_data" placeholder="e.g. Error logs, monitoring data" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="resolution_steps">Steps to Resolve and Prevent the Issue</label>
+              <textarea id="resolution_steps" name="resolution_steps" placeholder="e.g. Replaced faulty component, improved monitoring" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="date_resolved">Date Resolved</label>
+              <input type="date" id="date_resolved" name="date_resolved" required>
+            </div>
+            <div class="form-group">
+              <label for="approved_by">Approved By</label>
+              <input type="text" id="approved_by" name="approved_by" placeholder="e.g. Manager Name" required>
+            </div>
+            <button type="submit" class="btn">Create Report</button>
+          </form>
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endblock %}
