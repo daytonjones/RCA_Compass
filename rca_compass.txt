@@ -1,4 +1,4 @@
-rca-compass/
+RCA_Compass/
 ├── app/
 │   ├── __init__.py
 │   ├── models.py

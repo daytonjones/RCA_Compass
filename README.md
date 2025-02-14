@@ -32,8 +32,8 @@ Ensure you have the following installed:
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/daytonjones/rca-compass.git
-cd rca-compass
+git clone https://github.com/daytonjones/RCA_Compass.git
+cd RCA_Compass
 ```
 
 ### Configure Custom Assets
@@ -78,7 +78,7 @@ https://localhost/
 ---
 ## Project Structure
 ```
-rca-compass/
+RCA_Compass/
 ├── app/
 │   ├── __init__.py
 │   ├── models.py
