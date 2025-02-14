@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ report.title }}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      color: #333;
+      line-height: 1.5;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 10px;
+    }
+    header img {
+      width: 100px;
+      height: auto;
+      margin-right: 20px;
+    }
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    .section {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .section h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #007BFF;
+    }
+    .section p {
+      margin: 5px 0;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Use an absolute file path for the logo so that wkhtmltopdf can load it -->
+    <img src="file:///app/custom_assets/compass_logo.png" alt="RCA Compass Logo">
+    <h1>Root Cause Analysis for:</h1><br>
+    <h2>{{ report.title }}</h2>
+  </header>
+  
+  <div class="section">
+    <h2>General Information</h2>
+    <p><strong>Report Name:</strong> {{ data.report_name }}</p>
+    <p><strong>Description:</strong> {{ data.description }}</p>
+    <p><strong>Date of Incident:</strong> {{ data.date_of_incident }}</p>
+    <p><strong>Incident Description:</strong> {{ data.incident_description }}</p>
+    <p><strong>Reported By:</strong> {{ data.reported_by }}</p>
+    <p><strong>Affected:</strong> {{ data.affected }}</p>
+  </div>
+  
+  <div class="section">
+    <h2>Impact & Timeline</h2>
+    <p><strong>Impact:</strong> {{ data.impact }}</p>
+    <p><strong>Frequency:</strong> {{ data.frequency }}</p>
+    <p><strong>Timeline:</strong> {{ data.timeline }}</p>
+  </div>
+  
+  <div class="section">
+    <h2>Events</h2>
+    <p><strong>Events Before:</strong> {{ data.events_before }}</p>
+    <p><strong>Events During:</strong> {{ data.events_during }}</p>
+    <p><strong>Events After:</strong> {{ data.events_after }}</p>
+  </div>
+  
+  <div class="section">
+    <h2>Investigation</h2>
+    <p><strong>Personnel Involved:</strong> {{ data.personnel }}</p>
+    <p><strong>Staff Investigating:</strong> {{ data.staff_investigating }}</p>
+    <p><strong>Job Titles:</strong> {{ data.job_titles }}</p>
+    <p><strong>Data Collection Methods:</strong> {{ data.data_collection_methods }}</p>
+    <p><strong>Communication Plan:</strong> {{ data.communication_plan }}</p>
+  </div>
+  
+  <div class="section">
+    <h2>Root Cause & Resolution</h2>
+    <p><strong>Root Cause:</strong> {{ data.root_cause }}</p>
+    <p><strong>Supporting Data:</strong> {{ data.supporting_data }}</p>
+    <p><strong>Resolution Steps:</strong> {{ data.resolution_steps }}</p>
+    <p><strong>Date Resolved:</strong> {{ data.date_resolved }}</p>
+    <p><strong>Approved By:</strong> {{ data.approved_by }}</p>
+  </div>
+  
+  <footer>
+    &copy; 2025 RCA Compass
+  </footer>
+</body>
+</html>
+

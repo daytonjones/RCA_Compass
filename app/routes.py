@@ -75,13 +75,17 @@ def index():
 @app.route('/reports/<int:report_id>/pdf')
 def download_pdf(report_id):
     report = RCAReport.query.get_or_404(report_id)
-    report_data = json.loads(report.report_data)
-    # Reuse the index.html template to render the report in PDF mode.
-    html = render_template("index.html", selected_report=report, reports=[], pdf=True)
+    data = json.loads(report.report_data)
+    html = render_template("report_pdf.html", report=report, data=data)
     config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf")
-    pdf = pdfkit.from_string(html, False, configuration=config)
-    return send_file(io.BytesIO(pdf),
-                     download_name=f"report_{report.id}.pdf",
-                     as_attachment=True,
-                     mimetype='application/pdf')
+    options = {"--enable-local-file-access": ""}
+    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
+    # Use the report title as the download file name, appending .pdf.
+    # (You might want to sanitize the title if necessary.)
+    return send_file(
+        io.BytesIO(pdf),
+        download_name=f"{report.title}.pdf",
+        as_attachment=True,
+        mimetype='application/pdf'
+    )
 
