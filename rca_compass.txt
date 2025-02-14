@@ -6,18 +6,20 @@ rca-compass/
 │   ├── templates/
 │   │   ├── base.html
 │   │   ├── form.html
+│   │   ├── index.html
+│   │   ├── list_reports.html
 │   │   ├── report.html
-│   │   └── list_reports.html
-│   └── static/
-│       └── custom/        # for custom logos, images, etc.
+│   │   ├── report_pdf.html
+├── custom_assets/         # persistent directory for custom files
+│   ├── compass_bg.svg
+│   └── compass_logo.png
+├── data/                  # persistent SQLite database mount
 ├── docker/
 │   ├── Dockerfile
 │   └── nginx/
-│       ├── nginx.conf
 │       ├── compass.crt
 │       └── compass.key
-├── data/                  # persistent SQLite database mount
-├── custom_assets/               # persistent directory for custom files
+│       ├── nginx.conf
 ├── docker-compose.yml
 ├── requirements.txt
 └── README.md
