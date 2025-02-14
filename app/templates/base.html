@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RCA Compass</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { max-width: 800px; margin: 0 auto; }
+    .header { text-align: center; padding: 20px; }
+    .footer { text-align: center; margin-top: 20px; font-size: 0.8em; color: #888; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; }
+    input, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+    .btn { background-color: #007BFF; color: #fff; padding: 10px 15px; border: none; cursor: pointer; }
+    .btn:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>RCA Compass</h1>
+  </div>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul>
+      {% for category, message in messages %}
+        <li style="color: green;">{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+  <div class="footer">
+    &copy; 2025 RCA Compass
+  </div>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+{% if not pdf %}
+  {% extends "base.html" %}
+{% endif %}
+{% block content %}
+  <h2>Root Cause Analysis Report</h2>
+  <p><strong>Description:</strong> {{ data.description }}</p>
+  <p><strong>Date of Incident:</strong> {{ data.date_of_incident }}</p>
+  <p><strong>Incident Description:</strong> {{ data.incident_description }}</p>
+  <p><strong>Reported By:</strong> {{ data.reported_by }}</p>
+  <p><strong>Affected:</strong> {{ data.affected }}</p>
+  <p><strong>Impact:</strong> {{ data.impact }}</p>
+  <p><strong>Frequency:</strong> {{ data.frequency }}</p>
+  <p><strong>Timeline:</strong> {{ data.timeline }}</p>
+  <p><strong>Events Before:</strong> {{ data.events_before }}</p>
+  <p><strong>Events During:</strong> {{ data.events_during }}</p>
+  <p><strong>Events After:</strong> {{ data.events_after }}</p>
+  <p><strong>Personnel:</strong> {{ data.personnel }}</p>
+  <p><strong>Staff Investigating:</strong> {{ data.staff_investigating }}</p>
+  <p><strong>Job Titles:</strong> {{ data.job_titles }}</p>
+  <p><strong>Data Collection Methods:</strong> {{ data.data_collection_methods }}</p>
+  <p><strong>Communication Plan:</strong> {{ data.communication_plan }}</p>
+  <p><strong>Root Cause:</strong> {{ data.root_cause }}</p>
+  <p><strong>Supporting Data:</strong> {{ data.supporting_data }}</p>
+  <p><strong>Resolution Steps:</strong> {{ data.resolution_steps }}</p>
+  <p><strong>Date Resolved:</strong> {{ data.date_resolved }}</p>
+  <p><strong>Approved By:</strong> {{ data.approved_by }}</p>
+  {% if not pdf %}
+  <p><a href="{{ url_for('download_pdf', report_id=report.id) }}" class="btn">Download PDF</a></p>
+  {% endif %}
+{% endblock %}
+
