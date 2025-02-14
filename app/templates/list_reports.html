@@ -1,0 +1,29 @@
+<!-- app/templates/list_reports.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>All RCA Reports</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description of the Issue</th>
+            <th>Date Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for report in reports %}
+        <tr>
+            <td>{{ report.id }}</td>
+            <td>{{ report.issue_description|truncate(50) }}</td>
+            <td>{{ report.created_at }}</td>
+            <td>
+                <a href="{{ url_for('view_report', report_id=report.id) }}" class="btn btn-sm btn-info">View</a>
+                <a href="{{ url_for('download_report', report_id=report.id) }}" class="btn btn-sm btn-success">PDF</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

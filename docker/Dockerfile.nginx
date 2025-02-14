@@ -1,0 +1,19 @@
+# docker/Dockerfile.nginx
+FROM nginx:stable-alpine
+
+# Copy custom Nginx config
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# Generate self-signed cert (if none provided). 
+# This step can be adapted or removed if you'd rather do it outside the container.
+RUN mkdir -p /etc/nginx/certs && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Org/CN=rca_compass.local" \
+    -keyout /etc/nginx/certs/server.key \
+    -out /etc/nginx/certs/server.crt
+
+EXPOSE 80
+EXPOSE 443
+
+CMD ["nginx", "-g", "daemon off;"]
+

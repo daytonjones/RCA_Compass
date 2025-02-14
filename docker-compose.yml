@@ -1,0 +1,33 @@
+services:
+  rca_compass_app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.app
+    container_name: rca_compass_app
+    volumes:
+      - db_data:/app
+      - uploads_data:/app/static/uploads
+    # Restart unless stopped
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nginx
+    container_name: rca_compass_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # If you want to provide your own certs, mount them into /etc/nginx/certs/
+      - certs_data:/etc/nginx/certs
+    depends_on:
+      - rca_compass_app
+    # Restart unless stopped
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  uploads_data:
+  certs_data:
+

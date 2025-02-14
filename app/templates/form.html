@@ -1,0 +1,118 @@
+<!-- app/templates/form.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Create a New RCA Report</h2>
+<form action="{{ url_for('submit') }}" method="POST" class="row g-3">
+    <div class="col-md-6">
+        <label for="issue_description" class="form-label">Description of the Issue</label>
+        <textarea id="issue_description" name="issue_description" class="form-control" rows="3" 
+                  placeholder="Describe the issue here..."></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="incident_date" class="form-label">Date of Incident</label>
+        <input type="text" id="incident_date" name="incident_date" class="form-control" 
+               placeholder="e.g. 2025-03-10"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="incident_description" class="form-label">Description of the Incident</label>
+        <textarea id="incident_description" name="incident_description" class="form-control" rows="3"
+                  placeholder="Describe the incident in detail..."></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="who_reported" class="form-label">Who Reported the Incident?</label>
+        <input type="text" id="who_reported" name="who_reported" class="form-control" 
+               placeholder="Person or team who reported the incident"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="who_affected" class="form-label">Who Did the Incident Affect?</label>
+        <input type="text" id="who_affected" name="who_affected" class="form-control"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="how_affected" class="form-label">How Did it Affect Them?</label>
+        <textarea id="how_affected" name="how_affected" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="how_often" class="form-label">How Often Did the Incident Occur?</label>
+        <input type="text" id="how_often" name="how_often" class="form-control"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="events_before" class="form-label">Events Before the Incident</label>
+        <textarea id="events_before" name="events_before" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="events_during" class="form-label">Events During the Incident</label>
+        <textarea id="events_during" name="events_during" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="events_after" class="form-label">Events After the Incident</label>
+        <textarea id="events_after" name="events_after" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="staff_involved" class="form-label">Staff Involved</label>
+        <textarea id="staff_involved" name="staff_involved" class="form-control" rows="2"
+                  placeholder="Names of staff involved"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="job_titles" class="form-label">Job Titles</label>
+        <textarea id="job_titles" name="job_titles" class="form-control" rows="2"
+                  placeholder="Corresponding job titles"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="data_collection_methods" class="form-label">Methods for Collecting Data</label>
+        <textarea id="data_collection_methods" name="data_collection_methods" class="form-control" rows="2"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="communication_plan" class="form-label">How Will Findings Be Communicated?</label>
+        <textarea id="communication_plan" name="communication_plan" class="form-control" rows="2"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="root_cause" class="form-label">Root Cause</label>
+        <textarea id="root_cause" name="root_cause" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="cause_occurrence" class="form-label">How Did the Root Cause Occur?</label>
+        <textarea id="cause_occurrence" name="cause_occurrence" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="supporting_data" class="form-label">What Data Supports This Finding?</label>
+        <textarea id="supporting_data" name="supporting_data" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="resolution_steps" class="form-label">Steps to Resolve and Prevent the Issue</label>
+        <textarea id="resolution_steps" name="resolution_steps" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label for="date_resolved" class="form-label">Date Resolved</label>
+        <input type="text" id="date_resolved" name="date_resolved" class="form-control"
+               placeholder="e.g. 2025-03-12"/>
+    </div>
+
+    <div class="col-md-6">
+        <label for="approved_by" class="form-label">Approved By</label>
+        <input type="text" id="approved_by" name="approved_by" class="form-control"/>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit RCA</button>
+    </div>
+</form>
+{% endblock %}
+
