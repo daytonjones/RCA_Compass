@@ -1,8 +1,8 @@
 import io
 import json
-import os
+from datetime import datetime
 import pdfkit
-from flask import render_template, request, redirect, url_for, flash, send_file, current_app
+from flask import render_template, request, redirect, url_for, flash, send_file
 from app import create_app, db
 from app.models import RCAReport
 
@@ -10,9 +10,13 @@ app = create_app()
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    reports = RCAReport.query.order_by(RCAReport.created_at.desc()).all()
+    selected_report = None
+
     if request.method == 'POST':
-        # Collect data from the form. The fields below match the sections of your attached template :contentReference[oaicite:0]{index=0}.
+        # Collect form data including a new "report_name" field
         report_data = {
+            "report_name": request.form.get("report_name"),
             "description": request.form.get("description"),
             "date_of_incident": request.form.get("date_of_incident"),
             "incident_description": request.form.get("incident_description"),
@@ -35,33 +39,44 @@ def index():
             "date_resolved": request.form.get("date_resolved"),
             "approved_by": request.form.get("approved_by")
         }
-        # Use the description as the title for simplicity
-        title = report_data.get("description", "Untitled Report")
-        report = RCAReport(title=title, report_data=json.dumps(report_data))
+        # Calculate new report number (sequential, zero-padded to 4 digits)
+        count = RCAReport.query.count() + 1
+        report_number = f"{count:04d}"
+        # Format the incident date in MMDDYYYY and MMDDYY formats
+        incident_date = request.form.get("date_of_incident")
+        dt = datetime.strptime(incident_date, "%Y-%m-%d")
+        mmddyyyy = dt.strftime("%m%d%Y")
+        # Get the user-provided report name
+        report_name_input = request.form.get("report_name").strip()
+        # Create the full title: ####_<NAME>-MMDDYYYY
+        full_report_title = f"{report_number}_{report_name_input}-{mmddyyyy}"
+        # Save the report
+        report = RCAReport(title=full_report_title, report_data=json.dumps(report_data))
         db.session.add(report)
         db.session.commit()
         flash("Report created successfully.", "success")
-        return redirect(url_for("list_reports"))
-    return render_template("form.html")
-
-@app.route('/reports')
-def list_reports():
-    reports = RCAReport.query.order_by(RCAReport.created_at.desc()).all()
-    return render_template("list_reports.html", reports=reports)
-
-@app.route('/reports/<int:report_id>')
-def view_report(report_id):
-    report = RCAReport.query.get_or_404(report_id)
-    report_data = json.loads(report.report_data)
-    return render_template("report.html", report=report, data=report_data)
+        return redirect(url_for("index", report_id=report.id))
+    
+    # GET request: check if a report is selected (via query parameter)
+    report_id = request.args.get('report_id')
+    if report_id:
+        selected_report = RCAReport.query.get_or_404(report_id)
+        selected_report.data = json.loads(selected_report.report_data)
+        # Pre-format the incident date as MMDDYY for the header
+        incident_date = selected_report.data.get("date_of_incident")
+        if incident_date:
+            dt = datetime.strptime(incident_date, "%Y-%m-%d")
+            selected_report.data["header_date"] = dt.strftime("%m%d%y")
+        else:
+            selected_report.data["header_date"] = ""
+    return render_template("index.html", reports=reports, selected_report=selected_report)
 
 @app.route('/reports/<int:report_id>/pdf')
 def download_pdf(report_id):
     report = RCAReport.query.get_or_404(report_id)
     report_data = json.loads(report.report_data)
-    # Render the report template as HTML for PDF conversion
-    html = render_template("report.html", report=report, data=report_data, pdf=True)
-    # wkhtmltopdf is installed in the container at /usr/bin/wkhtmltopdf
+    # Reuse the index.html template to render the report in PDF mode.
+    html = render_template("index.html", selected_report=report, reports=[], pdf=True)
     config = pdfkit.configuration(wkhtmltopdf="/usr/bin/wkhtmltopdf")
     pdf = pdfkit.from_string(html, False, configuration=config)
     return send_file(io.BytesIO(pdf),
