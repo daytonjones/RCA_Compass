@@ -8,6 +8,9 @@
   <div style="display: flex;">
     <!-- Left Column: List of previous reports -->
     <div style="width: 30%; padding: 10px; border-right: 1px solid #ccc;">
+      {% if selected_report %}
+        <a href="{{ url_for('index') }}" class="btn" style="display: inline-block; margin-top: 10px;">New Report</a>
+      {% endif %}
       <h3>Previous Reports</h3>
       <ul style="list-style: none; padding: 0;">
         {% for report in reports %}
@@ -18,9 +21,6 @@
           <li>No reports found.</li>
         {% endfor %}
       </ul>
-      {% if selected_report %}
-        <a href="{{ url_for('index') }}" class="btn" style="display: inline-block; margin-top: 10px;">New Report</a>
-      {% endif %}
     </div>
 
     <!-- Right Column: Either show the selected report or the create form -->

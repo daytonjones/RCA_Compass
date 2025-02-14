@@ -17,7 +17,7 @@ rca-compass/
 │       ├── compass.crt
 │       └── compass.key
 ├── data/                  # persistent SQLite database mount
-├── uploads/               # persistent directory for custom files
+├── custom_assets/               # persistent directory for custom files
 ├── docker-compose.yml
 ├── requirements.txt
 └── README.md

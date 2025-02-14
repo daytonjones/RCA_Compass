@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile
     volumes:
       - ./data:/app/data
-      - ./uploads:/app/uploads
+      - ./custom-assets:/app/custom-assets
     ports:
       - "8000:8000"
   nginx:
