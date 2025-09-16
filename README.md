@@ -1,5 +1,12 @@
 # RCA Compass - Root Cause Analysis Report Generator
-
+[![GitHub release](https://img.shields.io/github/v/release/daytonjones/RCA_Compass?sort=semver)](https://github.com/daytonjones/RCA_Compass/releases)
+[![GitHub last commit](https://img.shields.io/github/last-commit/daytonjones/RCA_Compass)](https://github.com/daytonjones/RCA_Compass/commits/main)
+[![GitHub issues](https://img.shields.io/github/issues/daytonjones/RCA_Compass)](https://github.com/daytonjones/RCA_Compass/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/daytonjones/RCA_Compass)](https://github.com/daytonjones/RCA_Compass/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/daytonjones/RCA_Compass)](https://github.com/daytonjones/RCA_Compass/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/daytonjones/RCA_Compass)](https://github.com/daytonjones/RCA_Compass/network/members)
+[![License](https://img.shields.io/github/license/daytonjones/RCA_Compass)](https://github.com/daytonjones/RCA_Compass/blob/main/LICENSE)
+---
 ## Overview
 RCA Compass is a web application designed to facilitate the creation, storage, and management of Root Cause Analysis (RCA) reports. It allows users to input detailed incident data, generate structured reports, download them as PDFs, and review past reports.
 
